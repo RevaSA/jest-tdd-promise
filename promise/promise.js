@@ -1,4 +1,8 @@
 class CustomPromise {
+    constructor(executor) {
+        executor()
+    }
+
     then() {
     }
 
