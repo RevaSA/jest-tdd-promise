@@ -1,9 +1,21 @@
 class CustomPromise {
     constructor(executor) {
-        executor()
+        this.queue = []
+        executor.call(null, this.onResolve.bind(this), this.onReject.bind(this))
     }
 
-    then() {
+    onResolve(data) {
+        this.queue.forEach(callback => {
+            data = callback(data)
+        })
+    }
+
+    onReject() {
+    }
+
+    then(fn) {
+        this.queue.push(fn)
+        return this
     }
 
     catch() {
