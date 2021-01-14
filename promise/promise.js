@@ -4,11 +4,14 @@ class CustomPromise {
     constructor(executor) {
         this.queue = []
         this.errorHandler = noop
+        this.finallyHandler = noop
 
         try {
             executor.call(null, this.onResolve.bind(this), this.onReject.bind(this))
         } catch (e) {
             this.errorHandler(e)
+        } finally {
+            this.finallyHandler()
         }
     }
 
@@ -16,10 +19,13 @@ class CustomPromise {
         this.queue.forEach(callback => {
             data = callback(data)
         })
+
+        this.finallyHandler()
     }
 
     onReject(error) {
         this.errorHandler(error)
+        this.finallyHandler()
     }
 
     then(fn) {
@@ -32,7 +38,9 @@ class CustomPromise {
         return this
     }
 
-    finally() {
+    finally(fn) {
+        this.finallyHandler = fn
+        return this
     }
 }
 
