@@ -2,6 +2,7 @@ const CustomPromise = require('./promise')
 
 describe('Custom Promise', () => {
     const successResult = 42
+    const errorResult = 'I am error'
     let executorSpy
     let promise
 
@@ -31,5 +32,17 @@ describe('Custom Promise', () => {
             .then(num => num / 2)
 
         expect(result).toBe(successResult * 2)
+    })
+
+    test('should catch error', () => {
+        const errorExecutor = (_, reject) => setTimeout(() => reject(errorResult), 150)
+        const errorPromise = new CustomPromise(errorExecutor)
+
+        return new Promise(resolve => {
+            errorPromise.catch(error => {
+                expect(error).toBe(errorResult)
+                resolve()
+            })
+        })
     })
 })

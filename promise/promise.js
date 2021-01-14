@@ -1,7 +1,15 @@
+const noop = () => {}
+
 class CustomPromise {
     constructor(executor) {
         this.queue = []
-        executor.call(null, this.onResolve.bind(this), this.onReject.bind(this))
+        this.errorHandler = noop
+
+        try {
+            executor.call(null, this.onResolve.bind(this), this.onReject.bind(this))
+        } catch (e) {
+            this.errorHandler(e)
+        }
     }
 
     onResolve(data) {
@@ -10,7 +18,8 @@ class CustomPromise {
         })
     }
 
-    onReject() {
+    onReject(error) {
+        this.errorHandler(error)
     }
 
     then(fn) {
@@ -18,7 +27,9 @@ class CustomPromise {
         return this
     }
 
-    catch() {
+    catch(fn) {
+        this.errorHandler = fn
+        return this
     }
 
     finally() {
