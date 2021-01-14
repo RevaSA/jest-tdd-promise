@@ -1,0 +1,24 @@
+{
+    "name": "jest-tdd-promise",
+    "version": "1.0.0",
+    "description": "TDD, jest, promise",
+    "private": true,
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RevaSA/jest-tdd-promise.git"
+    },
+    "keywords": [
+        "TDD",
+        "jest",
+        "promise"
+    ],
+    "author": "Stanislav Reva <RevaSA95@gmail.com>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/RevaSA/jest-tdd-promise/issues"
+    },
+    "homepage": "https://github.com/RevaSA/jest-tdd-promise#readme"
+}
